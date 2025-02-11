@@ -1,0 +1,80 @@
+theme = "tokyonight"
+
+[editor]
+mouse = false
+auto-completion = true
+auto-format = false
+bufferline = "always"
+gutters = ["diff", "diagnostics", "line-numbers", "spacer"]
+soft-wrap.enable = true
+soft-wrap.max-indent-retain = 80
+color-modes = true
+path-completion = true
+shell = ["fish", "-c"]
+true-color = true
+
+[editor.inline-diagnostics]
+cursor-line = "info"
+other-lines = "warning"
+max-diagnostics = 3
+
+[editor.auto-save]
+after-delay.enable = true
+after-delay.timeout = 1000
+
+[editor.cursor-shape]
+insert = "bar"
+
+[editor.file-picker]
+hidden = true
+
+[editor.statusline]
+left = ["mode", "spinner", "diagnostics", "file-modification-indicator", "read-only-indicator"]
+center = ["file-name"]
+right = ["register", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+separator = "│"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.lsp]
+enable = true
+display-messages = true
+display-inlay-hints = true
+
+[editor.indent-guides]
+render = true
+character = "┊"
+skip-levels = 1
+
+# At most one section each of 'keys.normal', 'keys.insert' and 'keys.select'
+[keys.normal]
+A-s = ":w!" # Maps Ctrl-s to the typable command :w which is an alias for :write (save file)
+a = "move_char_left" # Maps the 'a' key to the move_char_left command
+w = "move_line_up" # Maps the 'w' key move_line_up
+"C-S-esc" = "extend_line" # Maps Ctrl-Shift-Escape to extend_line
+g = { a = "code_action", q = ":bc" }
+"ret" = ["open_below", "normal_mode"] # Maps the enter key to open_below then re-enter normal mode
+F4 = ":sh make"
+A-x = ":buffer-close"
+
+[keys.normal.r]
+# lazygit
+g = ":sh zellij run -c -f -x 10% -y 10% --width 80% --height 80% -- fish -c lazygit"
+t = ":sh zellij run -c -f -x 10% -y 10% --width 80% --height 80% -- fish"
+
+[keys.normal.n]
+# Open the file(s) in the current window
+y = ":sh zellij run -c -f -x 10% -y 10% --width 80% --height 80% -- fish ~/.config/helix/yazi-picker.sh open"
+# Open the file(s) in a vertical pane
+v = ":sh zellij run -c -f -x 10% -y 10% --width 80% --height 80% -- fish ~/.config/helix/yazi-picker.sh vsplit"
+# Open the file(s) in a horizontal pane
+h = ":sh zellij run -c -f -x 10% -y 10% --width 80% --height 80% -- fish ~/.config/helix/yazi-picker.sh hsplit"
+
+[keys.insert]
+j = { j = "normal_mode" } # Maps `jj` to exit insert mode
+
+pageup = "no_op"
+pagedown = "no_op"
+home = "no_op"
+end = "no_op"
