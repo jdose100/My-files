@@ -63,6 +63,15 @@ require("nvchad.term").config = function()
     }
 end
 
+-- setup shell
+vim.cmd [[
+    let &shell = executable('pwsh') ? 'pwsh' : 'powershell'
+	let &shellcmdflag = '-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[''Out-File:Encoding'']=''utf8'';$PSStyle.OutputRendering=''plaintext'';Remove-Alias -Force -ErrorAction SilentlyContinue tee;'
+	let &shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+	let &shellpipe  = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
+	set shellquote= shellxquote=
+]]
+
 -- disable signature_help
 vim.api.nvim_create_autocmd("BufReadPost", {
     pattern = "*",
@@ -71,13 +80,132 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
 })
 
--- set syntax=fase
-vim.api.nvim_create_autocmd("BufReadPost", {
-    pattern = { "*.asm", "*.inc" },
-    callback = function()
-        vim.cmd[[ set syntax=fasm ]]
+-- setup dap and dapui
+require('dap.ext.vscode').load_launchjs(nil, {})
+
+vim.fn.sign_define('DapBreakpointCondition', {text='🔶', texthl='', linehl='', numhl=''})
+vim.fn.sign_define('DapBreakpointRejected', {text='⚠️', texthl='', linehl='', numhl=''})
+vim.fn.sign_define('DapBreakpoint',{ text ='🔴', texthl ='', linehl ='', numhl =''})
+vim.fn.sign_define('DapStopped',{ text ='▶️', texthl ='', linehl ='', numhl =''})
+
+local dap, dapui = require("dap"), require("dapui")
+dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
+
+dap.adapters.codelldb = {
+    type = 'server',
+    port = '${port}',
+    executable = {
+        command = 
+            'C:/Users/Jdose100/AppData/Local/nvim-data/mason/packages/codelldb/extension/adapter/codelldb.exe',
+        args = { '--port', '${port}' },
+    },
+}
+
+-- setup dap-lldb
+local rust_cpp_c_config = {
+    name = "Launch Rust/C++/C",
+    type = "lldb",
+    request = "launch",
+    cwd = "${workspaceFolder}",
+    stopOnEntry = false,
+    args = {},
+
+    program = function ()
+        return 'main.exe' -- path to executable
     end
-})
+}
+
+dap.configurations.c = rust_cpp_c_config
+
+local dap_lldb_config = { configurations = {
+    c = { rust_cpp_c_config }, -- C lang
+},}
+
+require("dap-lldb").setup(dap_lldb_config)
+
+-- setup rust
+vim.g.rustaceanvim = {
+    server = {
+        default_settings = {
+            ['rust-analyzer'] = {
+                cargo = {
+                    extraEnv = { CARGO_PROFILE_RUST_ANALYZER_INHERITS = 'dev', },
+                    extraArgs = { "--profile", "rust-analyzer", },
+                },
+            },
+        },
+    },
+
+    neotest = {
+        adapter = {
+            args = {}
+        }
+    },
+
+    server = {
+        settings = {
+            cargo = {
+                args = {},  -- Очищаем все аргументы
+                buildFlags = {}
+            },
+            runnables = {
+                args = {}  -- Очищаем аргументы для запуска
+            }
+        }
+    }
+
+    -- tools = {
+    --     executor = function(cmd, args, opts)
+    --         -- Remove unwanted arguments
+    --         local filtered_args = vim.tbl_filter(function(arg)
+    --             return arg ~= "--show-output" and arg ~= "--color=never"
+    --         end, opts)
+    --
+    --         -- table.insert(filtered_args, "")
+    --         table.insert(filtered_args, "--color=always")
+    --
+    --         return require("rustaceanvim.executor").execute(cmd, filtered_args, opts)
+    --     end,
+    -- },
+}
+
+require('neotest').setup {
+    adapters = {
+      require('rustaceanvim.neotest'),
+    },
+
+    runners = {
+        rust = {
+            strategy = 'cargo',
+            args = {},  -- Пустой список аргументов
+            output = 'raw'
+        }
+    }
+}
+
+-- set syntax=fasm
+vim.g.asmsyntax = "fasm"
+vim.cmd[[
+    :filetype on
+
+    autocmd BufRead,BufNewFile *asm setlocal comments=:;
+    autocmd BufRead,BufNewFile *asm setlocal commentstring=;\ %s
+
+    autocmd BufRead,BufNewFile *inc setlocal syntax=fasm
+    autocmd BufRead,BufNewFile *inc setlocal comments=:;
+    autocmd BufRead,BufNewFile *inc setlocal commentstring=;\ %s
+]]
+
+-- vim.api.nvim_create_autocmd("BufReadPre", {
+--     pattern = { "asm", "inc" },
+--     callback = function()
+--         vim.cmd[[ 
+--             set ft=fasm
+--             set comments=:;
+--             set commentstring=;\ %s
+--         ]]
+--     end
+-- })
 
 -- open dashboard if not opened files
 vim.api.nvim_create_autocmd("BufDelete", {
