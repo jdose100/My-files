@@ -1,0 +1,12 @@
+{
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Tokyo Night Storm",
+    "files.autoSave": "afterDelay"
+
+    "vim.insertModeKeyBindings": [
+        {
+        "before": ["k", "k"],
+        "after": ["<Esc>"]
+        }
+    ],
+}
