@@ -1,6 +1,130 @@
 return {
     { "saecki/crates.nvim", tag = "stable", event = "BufRead Cargo.toml" },
     { "kosayoda/nvim-lightbulb", enable = false },
+    { "fedorenchik/fasm.vim", lazy = false },
+
+    -- ### DAP PLUGINS ### --
+    {
+        "jay-babu/mason-nvim-dap.nvim",
+        opts = {
+            handlers = {},
+            automatic_installation = {},
+            ensure_installed = {
+                "codelldb"
+            },
+        },
+        dependencies = {
+            "mfussenegger/nvim-dap",
+            "williamboman/mason.nvim",
+        },
+    },
+    {
+        "theHamsta/nvim-dap-virtual-text",
+        config = true,
+        dependencies = {
+            "mfussenegger/nvim-dap",
+        },
+    },
+    { 
+        "rcarriga/nvim-dap-ui", 
+        dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"},
+        config = true,
+        keys = {
+            {
+                "<leader>du",
+                function () require "dapui".toggle({}) end,
+                desc = "Debug: Dap UI"
+            }
+        }
+    },
+    { 
+        "mfussenegger/nvim-dap",
+        keys = {
+            {
+                "<leader>df",
+                function () require "dap".step_over() end,
+                desc = "Debug: > Step Over"
+            },
+            {
+                "<leader>di",
+                function () require "dap".step_into() end,
+                desc = "Debug: ⏎ Step Into"
+            },
+            {
+                "<leader>dg",
+                function () require "dap".step_out() end,
+                desc = "Debug: < Step Out"
+            },
+            {
+                "<leader>db",
+                function () require "dap".toggle_breakpoint() end,
+                desc = "Debug: Toggle Breakpoint"
+            },
+            {
+                "<leader>dB",
+                function () require "dap".set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
+                desc = "Debug: Set Breakpoint"
+            },
+            {
+                "<leader>dc",
+                function () require "dap".continue() end,
+                desc = "Debug: Start/Continue"
+            },
+            {
+              "<leader>dR",
+              function() require "dap".run_to_cursor() end,
+              desc = "Debug: Run to Cursor"
+            },
+            {
+              "<leader>dt",
+              function() require "dap".terminate() end,
+              desc = "Debug: Terminate"
+            },
+            {
+                "<leader>dr",
+                function () require "dap".run_last() end,
+                desc = "Debug: Run Last"
+            }
+        }
+    },
+    {
+        "julianolf/nvim-dap-lldb",
+        dependencies = { "mfussenegger/nvim-dap" },
+    },
+
+    -- ### OTHER PLUGINS ### --
+    {
+        "nvim-neotest/neotest",
+        dependencies = {
+            "nvim-neotest/nvim-nio",
+            "nvim-lua/plenary.nvim",
+            "antoinemadec/FixCursorHold.nvim",
+            "nvim-treesitter/nvim-treesitter"
+        },
+        keys = {
+            {
+                "<leader>ts",
+                function () require "neotest".summary.toggle() end,
+                desc = "Toggle summary"
+            },
+        },
+    },
+    {
+        "hrsh7th/nvim-cmp",
+        dependencies = {
+            "hrsh7th/cmp-nvim-lsp-signature-help",
+        },
+        opts = {
+            sources = {
+                { name = "nvim_lsp" },
+                { name = "luasnip" },
+                { name = "buffer" },
+                { name = "nvim_lua" },
+                { name = "path" },
+                { name = "nvim_lsp_signature_help" },
+            },
+        },
+    },
     { 
         "NvChad/nvterm",
         config = function ()
