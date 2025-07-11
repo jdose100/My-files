@@ -5,9 +5,10 @@ vim.lsp.enable(servers)
 
 -- asm-lsp
 vim.lsp.config("asm-lsp", {
-    cmd = {"/home/user/.local/share/nvim/mason/bin/asm-lsp"},
-    filetypes = {"asm"},
-    root_markers = {"Makefile"},
+    -- cmd = {"C:Users/Jdose100/AppData/Local/nvim-data/mason/packages/asm-lsp/bin/asm-lsp.exe"},
+    cmd = { "asm-lsp.cmd" },
+    filetypes = { "asm" },
+    root_markers = { "Makefile" },
 })
 
 -- gdshader
