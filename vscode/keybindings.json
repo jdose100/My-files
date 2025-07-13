@@ -26,19 +26,41 @@
         "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && !inSnippetMode"
     },
     {
-        "key": ";",
-        "command": "workbench.action.showCommands"
-    },
-    {
         "key": "ctrl+shift+p",
         "command": "-workbench.action.showCommands"
     },
     {
-        "key": "shift+;",
-        "command": "workbench.action.gotoLine"
-    },
-    {
         "key": "ctrl+g",
         "command": "-workbench.action.gotoLine"
+    },
+    {
+        "key": "shift+q",
+        "command": "workbench.action.closeGroup",
+        "when": "activeEditorGroupEmpty && multipleEditorGroups"
+    },
+    {
+        "key": "ctrl+w",
+        "command": "-workbench.action.closeGroup",
+        "when": "activeEditorGroupEmpty && multipleEditorGroups"
+    },
+    {
+        "key": "alt+j",
+        "command": "workbench.action.terminal.scrollDown",
+        "when": "terminalFocusInAny && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocusInAny && terminalProcessSupported && !terminalAltBufferActive"
+    },
+    {
+        "key": "ctrl+alt+pagedown",
+        "command": "-workbench.action.terminal.scrollDown",
+        "when": "terminalFocusInAny && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocusInAny && terminalProcessSupported && !terminalAltBufferActive"
+    },
+    {
+        "key": "alt+k",
+        "command": "workbench.action.terminal.scrollUp",
+        "when": "terminalFocusInAny && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocusInAny && terminalProcessSupported && !terminalAltBufferActive"
+    },
+    {
+        "key": "ctrl+alt+pageup",
+        "command": "-workbench.action.terminal.scrollUp",
+        "when": "terminalFocusInAny && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocusInAny && terminalProcessSupported && !terminalAltBufferActive"
     }
 ]

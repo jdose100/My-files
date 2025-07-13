@@ -1,12 +1,28 @@
 {
     "workbench.iconTheme": "material-icon-theme",
     "workbench.colorTheme": "Tokyo Night Storm",
-    "files.autoSave": "afterDelay"
+    "files.autoSave": "afterDelay",
 
     "vim.insertModeKeyBindings": [
         {
-        "before": ["k", "k"],
-        "after": ["<Esc>"]
+            "before": ["k", "k"],
+            "after": ["<Esc>"]
         }
     ],
+
+    "code-runner.executorMap": {
+        "rust": "cargo run",
+    },
+    "code-runner.runInTerminal": true,
+
+    // "vim.normalModeKeyBindings": [
+    //     {
+    //         "before": [":"],
+    //         "command": ["workbench.action.showCommands"]
+    //     },
+    //     {
+    //         "before": [";"],
+    //      "command": ["workbench.action.gotoLine"]
+    //    }
+    // ],
 }
