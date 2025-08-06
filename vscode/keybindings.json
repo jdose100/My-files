@@ -1,47 +1,48 @@
-// Place your key bindings in this file to override the defaults
+// -------- Стандартные настройки -------- //
+// tab и shift + tab - выбор между предложениями вставки от lsp
+// ctrl + shift + g  - поиск во всех файлах
+
+// -------- Project Manager (Плагин) -------- //
+// alt + p        - список проектов
+// ctlr + alt + p - projectManager.listProjects
+
+// -------- Терминал -------- //
+// alt + j - листать терминал вниз
+// alt + k - листать терминал вверх
+// alt + i - показать терминал
 [
-    {
-        "key": "shift+e",
-        "command": "workbench.view.explorer",
-        "when": "viewContainer.workbench.view.explorer.enabled"
-    },
-    {
-        "key": "ctrl+shift+e",
-        "command": "-workbench.view.explorer",
-        "when": "viewContainer.workbench.view.explorer.enabled"
-    },
-    {
-        "key": "tab",
-        "command": "-acceptSelectedSuggestion",
-        "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus"
-    },
     {
         "key": "tab",
         "command": "selectNextSuggestion",
-        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && !inSnippetMode"
+        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
     },
     {
         "key": "shift+tab",
         "command": "selectPrevSuggestion",
-        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && !inSnippetMode"
+        "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
     },
     {
-        "key": "ctrl+shift+p",
-        "command": "-workbench.action.showCommands"
+        "key": "ctrl+alt+p",
+        "command": "projectManager.listProjects"
     },
     {
-        "key": "ctrl+g",
-        "command": "-workbench.action.gotoLine"
+        "key": "ctrl+shift+g",
+        "command": "-workbench.view.scm",
+        "when": "workbench.scm.active"
     },
     {
-        "key": "shift+q",
-        "command": "workbench.action.closeGroup",
-        "when": "activeEditorGroupEmpty && multipleEditorGroups"
+        "key": "alt+p",
+        "command": "workbench.view.extension.project-manager"
     },
     {
-        "key": "ctrl+w",
-        "command": "-workbench.action.closeGroup",
-        "when": "activeEditorGroupEmpty && multipleEditorGroups"
+        "key": "alt+i",
+        "command": "workbench.action.terminal.toggleTerminal",
+        "when": "terminal.active"
+    },
+    {
+        "key": "ctrl+`",
+        "command": "-workbench.action.terminal.toggleTerminal",
+        "when": "terminal.active"
     },
     {
         "key": "alt+j",

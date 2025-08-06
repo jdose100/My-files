@@ -1,28 +1,224 @@
+// Нужны следующие расширения для работы:
+//   - Code runner
+//   - Material Icon Theme
+//   - Moonlight
+//   - Project Manager
+//   - Vim
+//   - TODO Highlight
+// Рекомендованные расширения:
+//   - indent-rainbow
+//   - Dependi
+//   - Code Spellchecker
+//   - Prettier
+// Расширение которые также настраиваются:
+//   - Excalidraw
+//   - Draw.IO
+// Нужен шрифт: 'JetBraints Mono'
 {
+    // Убрать значок для сворачивания кода
+    "editor.showFoldingControls": "never",
+
+    // Убрать иконку лампочки при наведении на код
+    "editor.lightbulb.enabled": "off",
+
+
+    // --- User Interface --- //
+
+    // Theme
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Tokyo Night Storm",
+    "workbench.colorTheme": "Moonlight II",
+    "material-icon-theme.hidesExplorerArrows": true,
+    "workbench.tree.indent": 22,
+
+    // Шрифт
+    "editor.fontFamily": "'JetBrains Mono', 'bold', 'bold'",
+    "editor.fontSize": 18,
+
+    // Запрашивать подтверждение на Drag&Drop
+    "explorer.confirmDragAndDrop": false,
+
+    // Sidebar справа
+    "workbench.sideBar.location": "right",
+
+    // Убрать статус бар снизу
+    "workbench.statusBar.visible": false,
+
+    // Убираем виджет справа для скролла
+    "editor.scrollbar.horizontal": "hidden",
+    "editor.scrollbar.vertical": "hidden",
+    "editor.minimap.enabled": false,
+    "editor.matchBrackets": "never",
+    "editor.occurrencesHighlight": "off",
+    "editor.overviewRulerBorder": false,
+    "editor.hideCursorInOverviewRuler": true,
+    "editor.stickyScroll.enabled": false,
+
+    "workbench.colorCustomizations": {
+        "editorCursor.background": "#000000",
+        "editorOverviewRuler.wordHighlightStrongForeground": "#0000",
+        "editorOverviewRuler.selectionHighlightForeground": "#0000",
+        "editorOverviewRuler.rangeHighlightForeground": "#0000",
+        "editorOverviewRuler.wordHighlightForeground": "#0000",
+        "editorOverviewRuler.bracketMatchForeground": "#0000",
+        "editorOverviewRuler.findMatchForeground": "#0000",
+        "editorOverviewRuler.modifiedForeground": "#0000",
+        "editorOverviewRuler.deletedForeground": "#0000",
+        "editorOverviewRuler.warningForeground": "#0000",
+        "editorOverviewRuler.addedForeground": "#0000",
+        "editorOverviewRuler.errorForeground": "#0000",
+        "editorOverviewRuler.infoForeground": "#0000",
+        "editorOverviewRuler.border": "#0000",
+    },
+
+    // Убрать панель справа с git, run, debug и т.д
+    "workbench.activityBar.location": "hidden",
+
+    // Отключение панель управления окном
+    "workbench.layoutControl.enabled": false,
+    "window.customTitleBarVisibility": "never",
+    "window.titleBarStyle": "native",
+    "window.menuBarVisibility": "toggle",
+
+    // Отключение лишних декораций
+    // "explorer.decorations.badges": false,
+    "git.decorations.enabled": false,
+    "scm.diffDecorations": "none",
+
+    // Не показывать все открытые вкладки
+    "workbench.editor.showTabs": "single",
+
+    // Открывать ли пустую страницу
+    "workbench.startupEditor": "none",
+
+    // Отключение окна с помощью для новичков
+    "workbench.tips.enabled": false,
+
+    // Не показывать пробелы, табы и т.п символы в редакторе
+    "editor.renderWhitespace": "none",
+
+    // Отключает подсветку активной строки
+    "editor.renderLineHighlight": "none",
+
+    // Отключает вертикальные линии отступов в редакторе и дереве файлов
+    "workbench.tree.renderIndentGuides": "none",
+    "editor.guides.indentation": false,
+
+
+    // --- Стандартные настройки --- //
+
+    // Auto Save
     "files.autoSave": "afterDelay",
 
+    // Более плавный курсор
+    "editor.cursorSmoothCaretAnimation": "on",
+
+    // Дефолтный размер редактора
+    "window.zoomLevel": 0.0,
+
+    // Длина 1 tab
+    "editor.tabSize": 4,
+
+    // Всегда использовать те отстуры, которые заданны вручную
+    "editor.detectIndentation": false,
+
+    // Добавлять 1 пустую строку в конец файла
+    "files.insertFinalNewline": true,
+
+    // Отключить автообновления
+    "update.mode": "none",
+
+    // Отключает предложения установить расширения
+    "extensions.ignoreRecommendations": true,
+
+    // Терминал
+    "terminal.integrated.enableImages": true,
+    "terminal.integrated.stickyScroll.enabled": true,
+    "terminal.integrated.fontLigatures.enabled": true,
+
+
+    // --- Настройка плагинов --- //
+
+    // Code runner
+    "code-runner.runInTerminal": true,
+    "code-runner.executorMap": {
+        "rust": "cargo run"
+    },
+
+    // Vim
+    "vim.leader": "<space>",
     "vim.insertModeKeyBindings": [
-        {
+        { // Выходит в normal mode
             "before": ["k", "k"],
             "after": ["<Esc>"]
-        }
+        }, 
     ],
 
-    "code-runner.executorMap": {
-        "rust": "cargo run",
-    },
-    "code-runner.runInTerminal": true,
+    "vim.normalModeKeyBindings": [
+        { // Закрывает вкладку на <leader>
+            "before": ["<leader>", "s"],
+            "commands": ["workbench.action.closeActiveEditor"]
+        },
+        { // Открывает проводник файлов
+            "before": ["<leader>", "e"],
+            "commands": ["workbench.view.explorer"]
+        },
+        { // Открывает/Закрывает последнюю открытую панель справа
+            "before": ["<leader>", "q"],
+            "commands": ["workbench.action.toggleSidebarVisibility"]
+        },
+        { // Открывает меню интеграции с bevy (нужен плагин Bevy Inspector)
+            "before": ["<leader>", "i"],
+            "commands": ["workbench.view.extension.bevyInspectorContainer"]
+        },
+        { // Запускает код (нужен плагин Code runner)
+            "before": ["<leader>", "r"],
+            "commands": ["code-runner.run"]
+        },
+        { // Показывает hover
+            "before": ["<S-k>"],
+            "commands": ["editor.action.showHover"]
+        },
+        { // Открывает меню команд (аналог F1)
+            "before": [":"],
+            "commands": [
+                "workbench.action.showCommands",
+            ],
+            "silent": true
+        },
+        { // Go to line
+            "before": [";"],
+            "commands": ["workbench.action.gotoLine"]
+        },
+    ],
 
-    // "vim.normalModeKeyBindings": [
-    //     {
-    //         "before": [":"],
-    //         "command": ["workbench.action.showCommands"]
-    //     },
-    //     {
-    //         "before": [";"],
-    //      "command": ["workbench.action.gotoLine"]
-    //    }
-    // ],
+    "vim.handleKeys": {
+        "<C-a>": false,
+        "<C-f>": false
+    },
+
+    "extensions.experimental.affinity": {
+        "vscodevim.vim": 1
+    },
+
+    // TODO Hightlight
+    "todohighlight.keywords": [
+        {
+            "text": "NOTE:",
+            "color": "#e0e0e0",
+            "backgroundColor": "#0066cc",
+            "overviewRulerColor": "grey"
+        },
+    ],
+
+    // Excalidraw
+    "excalidraw.workspaceLibraryPath": ".",
+    "excalidraw.theme": "dark",
+
+    // Draw.IO
+    "hedit.vscode-drawio.resizeImages": null,
+
+    // Prettier
+    "[rust]": {
+        "editor.defaultFormatter": "jinxdash.prettier-rust"
+    },
 }
